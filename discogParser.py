@@ -7,14 +7,7 @@ def extractURL(card):
    return url.get("data-src")
 
 basePage = 'https://www.discogs.com/search/?sort=have%2Cdesc&format_exact=Album&layout=med&style_exact='
-
 urlSuffix = '&type=all'
-
-subGenre = 'Heavy+Metal'
-
-pageNumStr = "&page=20000000"
-
-pageURL = basePage + subGenre + urlSuffix + pageNumStr
 
 genreList = [
     "Heavy Metal",
@@ -32,16 +25,33 @@ genreList = [
 
 for genre in genreList:
     endOfResults = False
+    pageNum = 1
+
+    if ' ' in genre:
+        genreURL = genre.replace(' ','+')
+
     while(!endOfResults):
+        if pageNum > 1:
+            pageNumStr = "&page=" + str(pageNum)
+        else:
+            pageNumStr = ""
+
+        pageURL = basePage + genreURL + urlSuffix + pageNumStr
+
         try: 
             page = urllib.request.urlopen(pageURL)
-
             soup = BeautifulSoup(page,'html.parser')
 
             albumPics = soup.find_all("div",{"class":"card_image"})
 
-            imgURL = str(extractURL(albumPics[0]))
-            print(imgURL)
+            fileNum = 0
+            for entry in albumPics:
+                imgURL = str(extractURL(entry))
+                fileName = "./" + genreURL + str(fileNum)
+                urllib.request.urlretrieve(imgURL,fileName)
+                fileNum = fileNum + 1
+
+            pageNum = pageNum + 1
 
         except urllib.error.HTTPError as e:
 
