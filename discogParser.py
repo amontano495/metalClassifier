@@ -30,7 +30,7 @@ for genre in genreList:
     if ' ' in genre:
         genreURL = genre.replace(' ','+')
 
-    while(!endOfResults):
+    while(not(endOfResults)):
         if pageNum > 1:
             pageNumStr = "&page=" + str(pageNum)
         else:
