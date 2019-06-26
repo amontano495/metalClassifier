@@ -56,5 +56,5 @@ for genre in genreList:
         except urllib.error.HTTPError as e:
 
             if e.code == 404:
-                print("shit dont exist")
+                print("page does not exist")
                 endOfResults = True
