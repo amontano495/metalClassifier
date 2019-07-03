@@ -20,5 +20,3 @@ def imageExtractor(path):
     return labels, imagepaths
 
 labels,images = imageExtractor("./dataset/")
-
-
