@@ -1,5 +1,7 @@
 import os
 
+#takes in path to images for dataset
+#returns image filenames with corresponding label
 def imageExtractor(path):
     label = 0
 
